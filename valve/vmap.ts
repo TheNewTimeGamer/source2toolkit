@@ -43,7 +43,6 @@ class CMapEntity {
         if(!fs.existsSync(modelCsv)){
             return;
         }
-        console.log('Loading children..');
         const modelCsvData = fs.readFileSync(modelCsv);
         const lines = modelCsvData.toString().split('\n');
         for(let i = 1; i < lines.length; i++){
