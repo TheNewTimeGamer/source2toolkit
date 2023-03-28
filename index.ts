@@ -9,6 +9,4 @@ source2Project.indexFiles();
 
 const vmap = new Vmap();
 vmap.load(source2Project.files);
-console.log();
-console.log(vmap.toString());
 vmap.write();

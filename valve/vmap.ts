@@ -18,10 +18,11 @@ class CMapEntity {
 
     className: string;
     vmdlModel: string;
+    srcObject: string;
 
     children: CMapEntity[] = []
 
-    constructor(className: string, originX: string, originY: string, originZ: string, angleX: string, angleY: string, angleZ: string, scaleX: string, scaleY: string, scaleZ: string, vmdlModel: string) {
+    constructor(className: string, originX: string, originY: string, originZ: string, angleX: string, angleY: string, angleZ: string, scaleX: string, scaleY: string, scaleZ: string, vmdlModel: string, srcObject: string) {
         this.className = className;
         this.originX = originX;
         this.originY = originY;
@@ -33,6 +34,25 @@ class CMapEntity {
         this.scaleY = scaleY;
         this.scaleZ = scaleZ;
         this.vmdlModel = vmdlModel;
+        this.srcObject = srcObject;
+        this.loadChildren();
+    }
+
+    loadChildren() {
+        const modelCsv = this.srcObject.replace('.obj', '_ModelPlacementInformation.csv');
+        if(!fs.existsSync(modelCsv)){
+            return;
+        }
+        console.log('Loading children..');
+        const modelCsvData = fs.readFileSync(modelCsv);
+        const lines = modelCsvData.toString().split('\n');
+        for(let i = 1; i < lines.length; i++){
+            const args = lines[i].split(';');
+            const fileArgs = args[0].split(path.sep);
+            const srcObject = args[0].replace('..\\..\\', this.srcObject.split('resources')[0] + 'resources' + path.sep);
+            console.log(srcObject);
+            this.children.push(new CMapEntity('prop_static', '0', '0', '0', '0', '0', '0', '1', '1', '1', 'models/' + fileArgs[fileArgs.length-1].split('.')[0] + '.vmdl', srcObject));
+        }
     }
 
     toString(): string {
@@ -85,10 +105,9 @@ class Vmap {
         mapFiles.forEach((file: string) => {
             if(file.endsWith('.obj')){
                 const fileArgs = file.split(path.sep);
-                this.entities.push(new CMapEntity('prop_static', '0', '0', '0', '0', '0', '0', '1', '1', '1', 'models/' + fileArgs[fileArgs.length-1].split('.')[0] + '.vmdl'));
+                this.entities.push(new CMapEntity('prop_static', '0', '0', '0', '0', '0', '0', '1', '1', '1', 'models/' + fileArgs[fileArgs.length-1].split('.')[0] + '.vmdl', file));
             }
         });
-        console.log(this.entities);
     }
 
     toString(): string {
@@ -103,7 +122,7 @@ class Vmap {
                 }
             });
         }
-
+        
         return templater.put('template.vmap', values) || '';
     }
 
