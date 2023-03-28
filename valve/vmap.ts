@@ -50,7 +50,6 @@ class CMapEntity {
             const args = lines[i].split(';');
             const fileArgs = args[0].split(path.sep);
             const srcObject = args[0].replace('..\\..\\', this.srcObject.split('resources')[0] + 'resources' + path.sep);
-            console.log(srcObject);
             this.children.push(new CMapEntity('prop_static', '0', '0', '0', '0', '0', '0', '1', '1', '1', 'models/' + fileArgs[fileArgs.length-1].split('.')[0] + '.vmdl', srcObject));
         }
     }
