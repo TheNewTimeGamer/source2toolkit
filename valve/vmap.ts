@@ -1,5 +1,6 @@
 import templater, { TKeyValues } from "../templates/templater";
 import * as path from 'path';
+import * as fs from 'fs';
 
 class CMapEntity {
 
@@ -77,6 +78,17 @@ class Vmap {
 
     load(fileIndex: string[]) {
         console.log('Loading map files..');
+        const mapFiles = fileIndex.filter((file: string) => {
+            return file.includes('maps') && file.includes('adt');
+        });
+        
+        mapFiles.forEach((file: string) => {
+            if(file.endsWith('.obj')){
+                const fileArgs = file.split(path.sep);
+                this.entities.push(new CMapEntity('prop_static', '0', '0', '0', '0', '0', '0', '1', '1', '1', 'models/' + fileArgs[fileArgs.length-1].split('.')[0] + '.vmdl'));
+            }
+        });
+        console.log(this.entities);
     }
 
     toString(): string {
@@ -93,6 +105,10 @@ class Vmap {
         }
 
         return templater.put('template.vmap', values) || '';
+    }
+
+    write() {
+        fs.writeFileSync('out.vmap', this.toString());
     }
 
 }
