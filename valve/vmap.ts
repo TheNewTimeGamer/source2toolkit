@@ -67,7 +67,7 @@ class CMapEntity {
 
         values['SCALE_X'] = this.scaleX;
         values['SCALE_Y'] = this.scaleY;
-        values['SCALE_Z'] = this.scaleY;
+        values['SCALE_Z'] = this.scaleZ;
 
         values['VMDL_MODEL'] = this.vmdlModel;
 
