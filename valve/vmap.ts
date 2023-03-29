@@ -48,8 +48,8 @@ class CMapEntity {
         for(let i = 1; i < lines.length; i++){
             const args = lines[i].split(';');
             const fileArgs = args[0].split(path.sep);
-            const srcObject = args[0].replace('..\\..\\', this.srcObject.split('resources')[0] + 'resources' + path.sep);
-            this.children.push(new CMapEntity('prop_static', '0', '0', '0', '0', '0', '0', '1', '1', '1', 'models/' + fileArgs[fileArgs.length-1].split('.')[0] + '.vmdl', srcObject));
+            const srcObject = this.srcObject.split('resources')[0] + 'resources' + path.sep + args[0].replace(/\.\.\\/g, '');
+            this.children.push(new CMapEntity('prop_static', '' + (parseFloat(args[1]) - 0), args[2], '' + (parseFloat(args[3]) - 0), '' + (parseFloat(args[4]) * 360), '' + (parseFloat(args[5]) * 360), '' + (parseFloat(args[6]) * 360), args[8], args[8], args[8], 'models/' + fileArgs[fileArgs.length-1].split('.')[0] + '.vmdl', srcObject));
         }
     }
 

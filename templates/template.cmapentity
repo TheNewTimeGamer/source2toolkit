@@ -1,11 +1,8 @@
 "CMapEntity"
 			{
-				"id" "elementid" "3b20cf02-09a1-4b2a-a777-b7dcef78575d"
-				"origin" "vector3" "$ORIGIN_Z $ORIGIN_X $ORIGIN_Y"
-				"angles" "qangle" "$ANGLE_X $ANGLE_Y $ANGLE_Z"
-				"scales" "vector3" "$SCALE_X $SCALE_Y $SCALE_Z"
-				"nodeID" "int" "3"
-				"referenceID" "uint64" "0x3d5ae78368be2096"
+				"origin" "vector3" "$ORIGIN_X $ORIGIN_Z $ORIGIN_Y"
+				"angles" "qangle" "$ANGLE_Z $ANGLE_X $ANGLE_Y"
+				"scales" "vector3" "$SCALE_X $SCALE_Z $SCALE_Y"
 				"children" "element_array" 
 				[
 				    $VMAP_CHILDREN
